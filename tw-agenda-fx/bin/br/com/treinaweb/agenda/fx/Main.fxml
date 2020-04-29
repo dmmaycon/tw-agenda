@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.cell.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -25,24 +26,24 @@
                     <columns>
                       <TableColumn editable="false" prefWidth="192.0" text="Nome">
          					<cellValueFactory>
-         						<PropertyValueFactory property="nome"></PropertyValueFactory>
+         						<PropertyValueFactory property="nome" />
          					</cellValueFactory>             	
                       </TableColumn>
                       <TableColumn editable="false" minWidth="1.0" prefWidth="174.0" text="Idade">
                       		<cellValueFactory>
-         						<PropertyValueFactory property="idade"></PropertyValueFactory>
+         						<PropertyValueFactory property="idade" />
          					</cellValueFactory>
                       </TableColumn>                      
                       <TableColumn editable="false" minWidth="0.0" prefWidth="184.0" text="Telefone">
                       		<cellValueFactory>
-         						<PropertyValueFactory property="telefone"></PropertyValueFactory>
+         						<PropertyValueFactory property="telefone" />
          					</cellValueFactory>
                       </TableColumn>
                     </columns>
                   </TableView>
-                  <Button id="teste" fx:id="botaoInserir" layoutX="104.0" layoutY="166.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" text="Incluir" />
-                  <Button fx:id="botaoAlterar" layoutX="249.0" layoutY="166.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Alterar" />
-                  <Button fx:id="botaoExcluir" layoutX="392.0" layoutY="166.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Excluir" />
+                  <Button id="teste" fx:id="botaoInserir" layoutX="104.0" layoutY="166.0" mnemonicParsing="false" onAction="#botaoInserir_Action" prefHeight="25.0" prefWidth="117.0" text="Incluir" />
+                  <Button fx:id="botaoAlterar" layoutX="249.0" layoutY="166.0" mnemonicParsing="false" onAction="#botaoAlterar_Action" prefHeight="25.0" prefWidth="120.0" text="Alterar" />
+                  <Button fx:id="botaoExcluir" layoutX="392.0" layoutY="166.0" mnemonicParsing="false" onAction="#botaoExcluir_Action" prefHeight="25.0" prefWidth="120.0" text="Excluir" />
                </children>
             </Pane>
             <TitledPane collapsible="false" prefHeight="162.0" prefWidth="600.0" text="Informações de Contato">
@@ -77,8 +78,8 @@
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Button fx:id="botaoSalvar" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="Salvar" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Button fx:id="botaoCancelar" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="Cancelar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button fx:id="botaoSalvar" mnemonicParsing="false" onAction="#botaoSalvar_Action" prefHeight="25.0" prefWidth="157.0" text="Salvar" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Button fx:id="botaoCancelar" mnemonicParsing="false" onAction="#botaoCancelar_Action" prefHeight="25.0" prefWidth="157.0" text="Cancelar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </content>

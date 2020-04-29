@@ -6,13 +6,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableView;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import br.com.treinaweb.agenda.entidades.Contato;
@@ -40,6 +44,65 @@ public class MainController implements Initializable{
 	@FXML
 	private Button botaoSalvar;
 	
+	private Boolean ehInserir;
+	
+	private Contato contatoSelecionado;
+	
+	public void botaoInserir_Action() {
+		this.ehInserir = true;
+		this.txtfNome.setText("");
+		this.txtfIdade.setText("");
+		this.txtfTelefone.setText("");
+		habilitarEdicaoAgenda(true);
+	}
+	
+	public void botaoAlterar_Action() {
+		habilitarEdicaoAgenda(true);
+		this.ehInserir = false;
+		this.txtfNome.setText(this.contatoSelecionado.getNome());
+		this.txtfIdade.setText(Integer.toString(this.contatoSelecionado.getIdade()));
+		this.txtfTelefone.setText(this.contatoSelecionado.getTelefone());
+	}
+	
+	public void botaoCancelar_Action() {
+		habilitarEdicaoAgenda(false);
+		this.tabelaContatos.getSelectionModel().selectFirst();
+	}
+	
+	public void botaoExcluir_Action() {
+		
+		Alert confirmacao = new Alert(AlertType.CONFIRMATION);
+		confirmacao.setTitle("Confirmação");
+		confirmacao.setHeaderText("Excluir Contato!");
+		confirmacao.setContentText("Deseja realmente excluir o contato?");
+		
+		Optional<ButtonType> resultadoConfirmacao = confirmacao.showAndWait();
+		
+		if (resultadoConfirmacao.isPresent() && resultadoConfirmacao.get() == ButtonType.OK) {
+			AgendaRepositorio<Contato> repositorioContato = new ContatoRepositorio();
+			repositorioContato.excluir(this.contatoSelecionado);
+			carregarTabelaContatos();
+			this.tabelaContatos.getSelectionModel().selectFirst();
+		}
+				
+
+	}
+	
+	public void botaoSalvar_Action() {
+		AgendaRepositorio<Contato> repositorioContato = new ContatoRepositorio();
+		Contato contato = new Contato();
+		contato.setNome(txtfNome.getText());
+		contato.setIdade(Integer.parseInt(txtfIdade.getText()));
+		contato.setTelefone(txtfTelefone.getText());
+		if (this.ehInserir) {
+			repositorioContato.inserir(contato);
+		} else {
+			repositorioContato.atualizar(contato);
+		}
+		habilitarEdicaoAgenda(false);
+		carregarTabelaContatos();
+		this.tabelaContatos.getSelectionModel().selectFirst();
+	}
 	
 	private void carregarTabelaContatos() {
 		AgendaRepositorio<Contato> repositorioContato = new ContatoRepositorio();
@@ -94,6 +157,7 @@ public class MainController implements Initializable{
 				txtfNome.setText(contatoNovo.getNome());
 				txtfIdade.setText(String.valueOf(contatoNovo.getIdade()));
 				txtfTelefone.setText(contatoNovo.getTelefone());
+				this.contatoSelecionado = contatoNovo;
 			}
 		});
 		carregarTabelaContatos();
